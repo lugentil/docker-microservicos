@@ -1,0 +1,30 @@
+version: "3.9"
+services:
+  mysql:
+    image: mysql:5.7
+    ports:
+      - "3306:3306"
+    environment:
+      - MYSQL_ROOT_PASSWORD=definirsenha
+      - MYSQL_DATABASE=meudb
+    volumes:
+      - /home/lgentil/docker-microservicos/db/banco.sql:/etc/mysql
+  network:
+    subnet-gentil:
+      ipv4_address: 172.18.0.2
+  nginx:
+    image: nginx:build-teste
+    container_name: nginx
+    networks:
+      subnet-gentil:
+        ipv4_address: 172.18.0.3
+    ports:
+      - 8080:8080
+    depends_on:
+      - mysql
+networks:
+  subnet-gentil:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.18.0.0/24

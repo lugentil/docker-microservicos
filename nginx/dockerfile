@@ -1,0 +1,4 @@
+FROM nginx:alpine-slim
+RUN mkdir -p /usr/share/nginx/html/cdk
+COPY index.html /usr/share/nginx/html/
+ENTRYPOINT ["sleep", "infinity"]
